@@ -11,6 +11,7 @@ import {OnInit} from 'angular2/core';
 
 export class AppComponent implements OnInit {
     constructor(private _postService: PostService){
+        this._postService.createPost()
     }
 
     ngOnInit(){
