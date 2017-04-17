@@ -32,7 +32,7 @@ System.register(['angular2/core', './post.service', 'angular2/http'], function(e
                 }
                 AppComponent.prototype.ngOnInit = function () {
                     this._postService.getPosts()
-                        .subscribe(this.isLoading = false);
+                        .then(this.isLoading = false);
                     (function (posts) { return console.log(posts[0].id); });
                     ;
                 };

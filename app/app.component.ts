@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit(){
         this._postService.getPosts()
-        .subscribe(
+        .then(
             this.isLoading = false;
             posts => console.log(posts[0].id);
         );
