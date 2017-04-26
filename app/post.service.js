@@ -22,6 +22,7 @@ System.register(['angular2/http', 'rxjs/add/operator/map', 'angular2/core'], fun
                 core_1 = core_1_1;
             }],
         execute: function() {
+            // test change
             PostService = (function () {
                 function PostService(_http) {
                     this._http = _http;
