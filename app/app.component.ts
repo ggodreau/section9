@@ -19,9 +19,7 @@ import 'rxjs/add/observable/forkJoin';
     template: `
         <h1>PPHP</h1>
         <input type="text">
-        <h1>{{ user }}</h1>
-        <img class=avatar src="{{greg.avatar_url}}">
-        <div>{{ greg.avatar_url }}</div>
+        <div>{{ user.avatar_url }}</div>
         <div *ngFor="#follower of followers">
             <div class="media-left">
                 <img class=avatar src="{{follower.avatar_url}}">
@@ -37,7 +35,6 @@ import 'rxjs/add/observable/forkJoin';
 export class AppComponent implements OnInit {
     followers = [];
     user = "";
-    greg = "";
     
     constructor(
         private _postService: PostService,
@@ -47,22 +44,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(){
-//        this._postService.getPosts()
-//        .subscribe(posts => console.log(posts));
-//        this._gitService.getUser()
-//        .subscribe(user => console.log(user));
-//        this._gitService.getFollowers()
-//        .subscribe(followers => console.log(followers));
-        Observable.forkJoin(
-            [
-            this._gitService.getUser(),
-            this._gitService.getFollowers()
-            ]
-        ).subscribe(res => {
-            console.log(res[1][0]),
-            this.greg = res[1][0]
-        });
-
         Observable.forkJoin(
             this._gitService.getUser(),
             this._gitService.getFollowers()
