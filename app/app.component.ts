@@ -18,15 +18,18 @@ import 'rxjs/add/observable/forkJoin';
     `],
     template: `
         <h1>PPHP</h1>
+        <input type="text">
         <h1>{{ user }}</h1>
         <img class=avatar src="{{greg.avatar_url}}">
-        <div>{{ greg.avatar_url }}</div> 
-        <ul>
-            <li *ngFor="#follower of followers">
+        <div>{{ greg.avatar_url }}</div>
+        <div *ngFor="#follower of followers">
+            <div class="media-left">
                 <img class=avatar src="{{follower.avatar_url}}">
-            </li>
-        </ul>
-        <!--<div>{{ followers | json }}</div>-->
+            </div>
+            <div class="media-body">
+                {{follower.login}}
+            </div>
+        </div>
     `,
     providers: [PostService, HTTP_PROVIDERS, GitService]
 })
