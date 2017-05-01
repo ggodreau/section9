@@ -8,6 +8,14 @@ import 'rxjs/add/observable/forkJoin';
 
 @Component({
     selector: 'my-app',
+    styles: [`
+        .avatar {
+            border : 2px solid black;
+            height: 50px;
+            width: 50px;
+            border-radius: 10px;
+        }
+    `],
     template: `
         <h1>PPHP</h1>
         <h1>{{ user }}</h1>
@@ -15,7 +23,7 @@ import 'rxjs/add/observable/forkJoin';
         <div>{{ greg.avatar_url }}</div> 
         <ul>
             <li *ngFor="#follower of followers">
-                {{ follower.id }}
+                <img class=avatar src="{{follower.avatar_url}}">
             </li>
         </ul>
         <!--<div>{{ followers | json }}</div>-->

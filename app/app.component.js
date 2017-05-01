@@ -63,7 +63,8 @@ System.register(['angular2/core', './post.service', './github.service', 'angular
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n        <h1>PPHP</h1>\n        <h1>{{ user }}</h1>\n        <img class=avatar src=\"{{greg.avatar_url}}\">\n        <div>{{ greg.avatar_url }}</div> \n        <ul>\n            <li *ngFor=\"#follower of followers\">\n                {{ follower.id }}\n            </li>\n        </ul>\n        <!--<div>{{ followers | json }}</div>-->\n    ",
+                        styles: ["\n        .avatar {\n            border : 2px solid black;\n            height: 50px;\n            width: 50px;\n            border-radius: 10px;\n        }\n    "],
+                        template: "\n        <h1>PPHP</h1>\n        <h1>{{ user }}</h1>\n        <img class=avatar src=\"{{greg.avatar_url}}\">\n        <div>{{ greg.avatar_url }}</div> \n        <ul>\n            <li *ngFor=\"#follower of followers\">\n                <img class=avatar src=\"{{follower.avatar_url}}\">\n            </li>\n        </ul>\n        <!--<div>{{ followers | json }}</div>-->\n    ",
                         providers: [post_service_1.PostService, http_1.HTTP_PROVIDERS, github_service_1.GitService]
                     }), 
                     __metadata('design:paramtypes', [post_service_1.PostService, github_service_1.GitService])
