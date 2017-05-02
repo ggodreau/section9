@@ -1,34 +1,77 @@
 import {Component} from 'angular2/core';
 import {PostService} from './post.service';
+import {GitService} from './github.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {OnInit} from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
+import { SubscriptionFormComponent } from './subscription-form.component';
 
 @Component({
     selector: 'my-app',
+    styles: [`
+        .avatar {
+            border : 2px solid black;
+            height: 50px;
+            width: 50px;
+            border-radius: 10px;
+        }
+    `],
     template: `
         <h1>PPHP</h1>
-        <div *ngIf="isLoading">
-            <i class="fa fa-spinner fa-spin fa-3x"></i>
-        </div>
-        <div align="center">
-            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+        <input type="text" [value]="userInput" (input)="userInput = $event.target.value"/>
+        <div>{{ userInput }}</div>
+        <input 
+            type="button"
+            (click)="submit()"
+            value="Get User"
+        >
+        <subscription-form></subscription-form>
+        <div>{{ user.avatar_url }}</div>
+        <div *ngFor="#follower of followers">
+            <div class="media-left">
+                <img class=avatar src="{{follower.avatar_url}}">
+            </div>
+            <div class="media-body">
+                {{follower.login}}
+            </div>
         </div>
     `,
-    providers: [PostService, HTTP_PROVIDERS]
+    providers: [PostService, HTTP_PROVIDERS, GitService]
 })
 
 export class AppComponent implements OnInit {
-    isLoading = true;
-
-    constructor(private _postService: PostService){
+    followers = [];
+    user = "";
+//    userInput = "octocat";
+    userInput = "agnathan";
+    title = "myTitle";
+    
+    constructor(
+        private _postService: PostService,
+        private _gitService: GitService
+    ){
         this._postService.createPost()
     }
 
+    submit(){
+        Observable.forkJoin(
+            this._gitService.getUser(this.userInput),
+            this._gitService.getFollowers(this.userInput)
+        ).subscribe(res => {
+            this.followers = res[1],
+            this.user = res[0]
+        });
+    }
+    
     ngOnInit(){
-        this._postService.getPosts()
-        .then(
-            this.isLoading = false;
-            posts => console.log(posts[0].id);
+       Observable.forkJoin(
+            this._gitService.getUser(this.userInput),
+            this._gitService.getFollowers(this.userInput)
+        ).subscribe(res => { 
+            this.followers = res[1],
+            this.user = res[0]
+            }
         );
     }
 }

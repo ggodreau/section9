@@ -1,4 +1,4 @@
-System.register(['angular2/http', 'rxjs/add/operator/map', 'rxjs/add/operator/toPromise', 'angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/http', 'rxjs/add/operator/map', 'angular2/core', 'rxjs/add/observable/forkJoin'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11,43 +11,40 @@ System.register(['angular2/http', 'rxjs/add/operator/map', 'rxjs/add/operator/to
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var http_1, core_1;
-    var PostService;
+    var GitService;
     return {
         setters:[
             function (http_1_1) {
                 http_1 = http_1_1;
             },
             function (_1) {},
-            function (_2) {},
             function (core_1_1) {
                 core_1 = core_1_1;
-            }],
+            },
+            function (_2) {}],
         execute: function() {
-            // test change
-            PostService = (function () {
-                function PostService(_http) {
+            GitService = (function () {
+                function GitService(_http) {
                     this._http = _http;
-                    //    private _url = "http://jsonplaceholder.typicode.com/posts";
                     this._url = "https://api.github.com/users/";
-                    this._user = "octocat";
+                    this._followers = "/followers";
                 }
-                PostService.prototype.getPosts = function () {
-                    return this._http.get("http://jsonplaceholder.typicode.com/posts")
-                        .map(function (res) { return res.json(); })
-                        .toPromise();
-                };
-                PostService.prototype.createPost = function (post) {
-                    return this._http.post(this._url, JSON.stringify(post))
+                GitService.prototype.getUser = function (userInput) {
+                    return this._http.get(this._url + userInput)
                         .map(function (res) { return res.json(); });
                 };
-                PostService = __decorate([
+                GitService.prototype.getFollowers = function (userInput) {
+                    return this._http.get(this._url + userInput + this._followers)
+                        .map(function (res) { return res.json(); });
+                };
+                GitService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
-                ], PostService);
-                return PostService;
+                ], GitService);
+                return GitService;
             }());
-            exports_1("PostService", PostService);
+            exports_1("GitService", GitService);
         }
     }
 });
-//# sourceMappingURL=post.service.js.map
+//# sourceMappingURL=github.service.js.map

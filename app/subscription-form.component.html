@@ -1,0 +1,32 @@
+<form (ngSubmit)="submitForm(totalForm)" #totalForm="ngForm">
+    <div>
+        <label for="">input1</label>
+        <input ngControl="input1" type="">
+    </div>
+    <div>
+        <label>input2</label>
+        <input
+            #i2="ngForm"
+            ngControl="input2"
+            (change)="toConsole(i2)"
+            required
+            minlength=3>
+        <span 
+            class="alert alert-danger"
+            *ngIf="i2.touched && i2.dirty && !i2.valid">
+            Name is:{{ i2.name }} IsDirty?:{{ i2.dirty }}
+        </span>
+    </div>
+    <div>
+        <label>input3</label>
+        <select class="form-control">
+            <option>one</option>
+            <option>two</option>
+        </select>
+        <input ngControl="input3">
+    </div>
+    <button [disabled]="true" type="submit" class="btn btn-success">Submit!</button>
+    <div>
+        Value 1 = {{ totalForm.value | json }}
+    </div>
+</form>

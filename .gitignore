@@ -1,0 +1,3 @@
+# typescript post-compiled
+*.js
+*.js.map
