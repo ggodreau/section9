@@ -27,15 +27,14 @@ System.register(['angular2/http', 'rxjs/add/operator/map', 'angular2/core', 'rxj
                 function GitService(_http) {
                     this._http = _http;
                     this._url = "https://api.github.com/users/";
-                    this._user = "octocat";
                     this._followers = "/followers";
                 }
-                GitService.prototype.getUser = function () {
-                    return this._http.get(this._url + this._user)
+                GitService.prototype.getUser = function (userInput) {
+                    return this._http.get(this._url + userInput)
                         .map(function (res) { return res.json(); });
                 };
-                GitService.prototype.getFollowers = function () {
-                    return this._http.get(this._url + this._user + this._followers)
+                GitService.prototype.getFollowers = function (userInput) {
+                    return this._http.get(this._url + userInput + this._followers)
                         .map(function (res) { return res.json(); });
                 };
                 GitService = __decorate([

@@ -9,20 +9,19 @@ import 'rxjs/add/observable/forkJoin';
 export class GitService{
 
     private _url = "https://api.github.com/users/";
-    private _user = "octocat";
     private _followers = "/followers";
 
     constructor(private _http: Http){
     }
     
-    getUser() : Observable<User[]> {
-        return this._http.get(this._url + this._user)
+    getUser(userInput) : Observable<User[]> {
+        return this._http.get(this._url + userInput)
             .map(res => res.json());
 
     }
 
-    getFollowers() : Observable {
-        return this._http.get(this._url + this._user + this._followers)
+    getFollowers(userInput) : Observable {
+        return this._http.get(this._url + userInput + this._followers)
             .map(res => res.json());
     }
 

@@ -37,11 +37,21 @@ System.register(['angular2/core', './post.service', './github.service', 'angular
                     this._gitService = _gitService;
                     this.followers = [];
                     this.user = "";
+                    //    userInput = "octocat";
+                    this.userInput = "agnathan";
+                    this.title = "myTitle";
                     this._postService.createPost();
                 }
+                AppComponent.prototype.submit = function () {
+                    var _this = this;
+                    Observable_1.Observable.forkJoin(this._gitService.getUser(this.userInput), this._gitService.getFollowers(this.userInput)).subscribe(function (res) {
+                        _this.followers = res[1],
+                            _this.user = res[0];
+                    });
+                };
                 AppComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    Observable_1.Observable.forkJoin(this._gitService.getUser(), this._gitService.getFollowers()).subscribe(function (res) {
+                    Observable_1.Observable.forkJoin(this._gitService.getUser(this.userInput), this._gitService.getFollowers(this.userInput)).subscribe(function (res) {
                         _this.followers = res[1],
                             _this.user = res[0];
                     });
@@ -50,7 +60,7 @@ System.register(['angular2/core', './post.service', './github.service', 'angular
                     core_1.Component({
                         selector: 'my-app',
                         styles: ["\n        .avatar {\n            border : 2px solid black;\n            height: 50px;\n            width: 50px;\n            border-radius: 10px;\n        }\n    "],
-                        template: "\n        <h1>PPHP</h1>\n        <input type=\"text\">\n        <div>{{ user.avatar_url }}</div>\n        <div *ngFor=\"#follower of followers\">\n            <div class=\"media-left\">\n                <img class=avatar src=\"{{follower.avatar_url}}\">\n            </div>\n            <div class=\"media-body\">\n                {{follower.login}}\n            </div>\n        </div>\n    ",
+                        template: "\n        <h1>PPHP</h1>\n        <input type=\"text\" [value]=\"userInput\" (input)=\"userInput = $event.target.value\"/>\n        <div>{{ userInput }}</div>\n        <input \n            type=\"button\"\n            (click)=\"submit()\"\n            value=\"Get User\"\n        >\n        <subscription-form></subscription-form>\n        <div>{{ user.avatar_url }}</div>\n        <div *ngFor=\"#follower of followers\">\n            <div class=\"media-left\">\n                <img class=avatar src=\"{{follower.avatar_url}}\">\n            </div>\n            <div class=\"media-body\">\n                {{follower.login}}\n            </div>\n        </div>\n    ",
                         providers: [post_service_1.PostService, http_1.HTTP_PROVIDERS, github_service_1.GitService]
                     }), 
                     __metadata('design:paramtypes', [post_service_1.PostService, github_service_1.GitService])
